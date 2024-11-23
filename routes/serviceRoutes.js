@@ -20,10 +20,10 @@ router.get('/add', (req, res) => {
 // Yeni hizmet ekle
 router.post('/add', async (req, res) => {
   try {
-    const { category, image, name, description } = req.body;
+    const { category, image, name, description, info } = req.body;
 
     // Gerekli alanların kontrolü
-    if (!category || !image || !name || !description) {
+    if (!category || !image || !name || !description || !info) {
       return res.status(400).json({ message: 'Lütfen tüm alanları doldurun.' });
     }
 
@@ -32,7 +32,8 @@ router.post('/add', async (req, res) => {
       category,
       image,
       name,
-      description
+      description,
+      info
     });
 
     // Veritabanına kaydetme
