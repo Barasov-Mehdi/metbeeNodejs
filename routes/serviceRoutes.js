@@ -20,14 +20,13 @@ router.get('/add', (req, res) => {
 // Yeni hizmet ekle
 router.post('/add', async (req, res) => {
   try {
+    console.log(req.body); // Gelen tüm form verilerini logla
     const { category, image, name, description, info } = req.body;
 
-    // Gerekli alanların kontrolü
     if (!category || !image || !name || !description || !info) {
       return res.status(400).json({ message: 'Lütfen tüm alanları doldurun.' });
     }
 
-    // Yeni hizmet oluşturma
     const newService = new Service({
       category,
       image,
@@ -36,12 +35,12 @@ router.post('/add', async (req, res) => {
       info
     });
 
-    // Veritabanına kaydetme
     await newService.save();
     res.status(201).json({ message: 'Hizmet başarıyla eklendi.', service: newService });
   } catch (error) {
     res.status(500).json({ message: 'Sunucu hatası', error: error.message });
   }
 });
+
 
 module.exports = router;

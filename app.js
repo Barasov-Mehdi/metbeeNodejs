@@ -1,10 +1,13 @@
-const express = require('express');
+const express = require('express'); // 'express'ı sadece bir kez tanımlayın
 const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
 require('dotenv').config();
 
-const app = express();
+const app = express(); // Burada app'i tanımlayın
+
+app.use(express.json()); // JSON verisini parse etmek için
+app.use(express.urlencoded({ extended: true })); // Form verisini parse etmek için
 
 // Middleware
 app.use(cors());
