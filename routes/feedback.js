@@ -1,25 +1,26 @@
 const express = require('express');
-const router = express.Router();
 const Feedback = require('../models/feedback');
 
-// Geri bildirim formu sayfası
-router.get('/feedback', (req, res) => {
-  const successMessage = req.query.success ? "Mesaj Gönderildi" : "";
-  res.render('feedback', { successMessage });
+const router = express.Router();
+
+// Geri bildirim ekleme
+router.post('/', async (req, res) => {
+  try {
+    const feedback = new Feedback(req.body);
+    await feedback.save();
+    res.status(201).send({ message: 'Geri bildirim alındı!', feedback });
+  } catch (error) {
+    res.status(400).send({ error: 'Geri bildirim eklenemedi!', details: error.message });
+  }
 });
 
-// Geri bildirim gönderme
-router.post('/feedback', async (req, res) => {
-  const { name, phone, email, message } = req.body;
-  
+// Tüm geri bildirimleri getirme
+router.get('/', async (req, res) => {
   try {
-    const feedback = new Feedback({ name, phone, email, message });
-    await feedback.save();
-    // Başarılı bir geri bildirimden sonra ana sayfaya yönlendiriyoruz
-    res.redirect('/api/feedback'); // Başarı mesajı için query parametre ekliyoruz
+    const feedbacks = await Feedback.find();
+    res.status(200).send(feedbacks);
   } catch (error) {
-    console.error('Error saving feedback:', error);
-    res.status(500).send('Internal Server Error');
+    res.status(500).send({ error: 'Geri bildirimler getirilirken hata oluştu!', details: error.message });
   }
 });
 
