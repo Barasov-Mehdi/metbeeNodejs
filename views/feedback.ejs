@@ -3,83 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Geri Bildirim</title>
+    <title>Geri Bildirimler</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #fff;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .message, .error {
+            margin: 20px 0;
+            font-weight: bold;
+            color: green;
+        }
+        .error {
+            color: red;
+        }
+    </style>
 </head>
 <body>
-    <div class="container mt-5">
-        <h1>Geri Bildirim Gönder</h1>
-        <form id="feedbackForm">
-            <div class="form-group">
-                <label for="name">İsim</label>
-                <input type="text" class="form-control" id="name" required>
-            </div>
-            <div class="form-group">
-                <label for="email">E-posta</label>
-                <input type="email" class="form-control" id="email" required>
-            </div>
-            <div class="form-group">
-                <label for="message">Mesaj</label>
-                <textarea class="form-control" id="message" rows="4" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Gönder</button>
-        </form>
-
-        <h2 class="mt-5">Gönderilen Geri Bildirimler</h2>
-        <ul id="feedbackList" class="list-group mt-3">
-            <!-- Geri bildirimler buraya gelecek -->
-        </ul>
-    </div>
-
-    <script>
-        // Form gönderimi
-        const feedbackForm = document.getElementById('feedbackForm');
-        feedbackForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
-
-            try {
-                const response = await fetch('/feedback', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ name, email, message }),
-                });
-
-                const data = await response.json();
-                alert(data.message);
-                feedbackForm.reset();
-                loadFeedbacks(); // Geri bildirimleri yenile
-            } catch (error) {
-                console.error('Hata:', error);
-                alert('Geri bildirim gönderilirken bir hata oluştu.');
-            }
-        });
-
-        // Geri bildirimleri yükleme fonksiyonu
-        async function loadFeedbacks() {
-            try {
-                const response = await fetch('/feedback');
-                const feedbacks = await response.json();
-
-                const feedbackList = document.getElementById('feedbackList');
-                feedbackList.innerHTML = '';
-                feedbacks.forEach(feedback => {
-                    const li = document.createElement('li');
-                    li.className = 'list-group-item';
-                    li.innerText = `${feedback.name} (${feedback.email}): ${feedback.message} - ${new Date(feedback.createdAt).toLocaleString()}`;
-                    feedbackList.appendChild(li);
-                });
-            } catch (error) {
-                console.error('Hata:', error);
-            }
-        }
-
-        // Sayfa yüklendiğinde geri bildirimleri yükle
-        window.onload = loadFeedbacks;
-    </script>
-
+    <h2>Geri Bildirimler</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Ad</th>
+                <th>Telefon Numarası</th>
+                <th>Email</th>
+                <th>Mesaj</th>
+                <th>Tarih</th>
+                <th>Sil</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% feedbacks.forEach(feedback => { %>
+                <tr>
+                    <td><%= feedback.name %></td>
+                    <td><%= feedback.number %></td>
+                    <td><%= feedback.email %></td>
+                    <td><%= feedback.message %></td>
+                    <td><%= new Date(feedback.createdAt).toLocaleString() %></td>
+                    <td>
+                        <form action="/feedback/<%= feedback._id %>?_method=DELETE" method="POST" style="display:inline;">
+                            <button type="submit">Sil</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+    <div class="message"><%= message %></div>
+    <div class="error"><%= error %></div>
 </body>
 </html>

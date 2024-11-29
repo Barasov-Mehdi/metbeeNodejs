@@ -1,0 +1,25 @@
+<!-- views/newsList.ejs -->
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Haber Listesi</title>
+</head>
+<body>
+    <h1>Haber Listesi</h1>
+    <a href="/news/add">Yeni Haber Ekle</a>
+    <ul>
+        <% news.forEach(function(item) { %>
+            <li>
+                <h2><%= item.title %></h2>
+                <p><%= item.content %></p>
+                <p><strong>Yazar:</strong> <%= item.author %> | <strong>Tarih:</strong> <%= item.date.toLocaleDateString() %></p>
+                <form action="/news/<%= item._id %>?_method=DELETE" method="POST" style="display:inline;">
+                    <button type="submit">Sil</button>
+                </form>
+            </li>
+        <% }); %>
+    </ul>
+</body>
+</html>

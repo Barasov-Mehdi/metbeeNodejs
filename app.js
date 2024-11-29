@@ -2,19 +2,24 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
-const methodOverride = require('method-override'); // method-override modülünü ekleyin
+const methodOverride = require('method-override');
 require('dotenv').config();
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(methodOverride('_method')); // method-override'ı kullanın
+app.use(methodOverride('_method'));
 
 // Middleware
 app.use(cors());
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+
+app.use(cors({
+  origin: 'http://diğer-web-siten.com', // API'yi kullanacak olan web sitesinin URL'si
+  methods: ['GET', 'POST', 'DELETE', 'PUT'],
+}));
 
 // MongoDB Bağlantısı
 const mongoURI = process.env.MONGODB_URI;
@@ -26,29 +31,11 @@ mongoose
 // Routes
 const serviceRoutes = require('./routes/serviceRoutes');
 const feedbackRoutes = require('./routes/feedback');
+const newsRoutes = require('./routes/newsRoutes');
 
-app.use('/feedback', feedbackRoutes); 
-app.use('/service', serviceRoutes); 
-
-// Geri bildirimleri gösteren route
-app.get('/feedbacks', async (req, res) => {
-    try {
-        const feedbacks = await Feedback.find(); // Veritabanından geri bildirimleri al
-        res.render('feedbacks', { feedbacks });  // EJS'ye geri bildirimleri gönder
-    } catch (error) {
-        res.status(500).send('Bir hata oluştu.');
-    }
-});
-
-// Feedback silme route
-app.delete('/feedback/:id', async (req, res) => {
-    try {
-        await Feedback.findByIdAndDelete(req.params.id);
-        res.redirect('/feedbacks');  // Silme işlemi sonrasında geri bildirimler sayfasına yönlendir
-    } catch (error) {
-        res.status(500).send('Bir hata oluştu.');
-    }
-});
+app.use('/news', newsRoutes);
+app.use('/feedback', feedbackRoutes);
+app.use('/service', serviceRoutes);
 
 // Basit bir örnek route
 app.get('/', (req, res) => {
