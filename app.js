@@ -25,7 +25,10 @@ mongoose
 
 // Routes
 const serviceRoutes = require('./routes/serviceRoutes');
+const feedbackRoutes = require('./routes/feedbackRoutes'); // Geri bildirim yollarını ekleyin
+
 app.use('/service', serviceRoutes); // '/service' rotasına yönlendirme
+app.use('/feedback', feedbackRoutes); // Geri bildirim rotasını ekleyin
 
 // Basit bir örnek route
 app.get('/', (req, res) => {

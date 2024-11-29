@@ -25,6 +25,10 @@ const serviceSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now // Yeni bir hizmet eklendiğinde otomatik olarak mevcut tarih ayarları
   }
 });
 
