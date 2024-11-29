@@ -16,7 +16,7 @@ router.post('/feedback', async (req, res) => {
     const feedback = new Feedback({ name, phone, email, message });
     await feedback.save();
     // Başarılı bir geri bildirimden sonra ana sayfaya yönlendiriyoruz
-    res.redirect('/api/feedback'); // Başarı mesajı için query parametre ekliyoruz
+    res.redirect('/feedback?success=true'); // Başarıdan sonra yönlendir
   } catch (error) {
     console.error('Error saving feedback:', error);
     res.status(500).send('Internal Server Error');
