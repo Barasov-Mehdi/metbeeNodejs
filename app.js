@@ -17,7 +17,7 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use(cors({
-  origin: 'http://diğer-web-siten.com', // API'yi kullanacak olan web sitesinin URL'si
+  origin: 'https://metbee-81d77b1a1f7b.herokuapp.com/', // API'yi kullanacak olan web sitesinin URL'si
   methods: ['GET', 'POST', 'DELETE', 'PUT'],
 }));
 
