@@ -16,11 +16,6 @@ app.use(cors());
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-app.use(cors({
-  origin: 'https://metbee-81d77b1a1f7b.herokuapp.com/', // API'yi kullanacak olan web sitesinin URL'si
-  methods: ['GET', 'POST', 'DELETE', 'PUT'],
-}));
-
 // MongoDB Bağlantısı
 const mongoURI = process.env.MONGODB_URI;
 mongoose
@@ -31,9 +26,11 @@ mongoose
 // Routes
 const serviceRoutes = require('./routes/serviceRoutes');
 const feedbackRoutes = require('./routes/feedback');
+
 const newsRoutes = require('./routes/newsRoutes');
 
 app.use('/news', newsRoutes);
+
 app.use('/feedback', feedbackRoutes);
 app.use('/service', serviceRoutes);
 
