@@ -28,7 +28,7 @@ router.get('/', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   try {
     await Feedback.findByIdAndDelete(req.params.id);
-    res.redirect('/feedback?message=Başarıyla silindi!');
+    res.redirect('/feedback?message=Silindi!');
   } catch (error) {
     res.redirect('/feedback?error=Silme işlemi başarısız oldu: ' + error.message);
   }

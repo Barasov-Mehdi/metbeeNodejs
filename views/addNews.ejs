@@ -5,20 +5,133 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Haber Ekle</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        h1 {
+            text-align: center;
+            color: #222;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        form {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        input, textarea, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        input:focus, textarea:focus, button:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            form {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            label {
+                font-size: 13px;
+            }
+
+            input, textarea, button {
+                font-size: 13px;
+                padding: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            form {
+                padding: 10px;
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+
+            h1 {
+                font-size: 18px;
+            }
+
+            input, textarea, button {
+                font-size: 12px;
+                padding: 6px;
+            }
+        }
+        a{
+            text-decoration: none;
+            color: white;
+            font-size: 20px;
+            background-color: red;
+            padding: 10px;
+
+        }
+    </style>
 </head>
 <body>
-    <h1>Haber Ekle</h1>
+    <h1>Yeni xəbər əlavə et</h1>
     <form action="/news/add" method="POST">
-        <label for="title">Başlık:</label>
+        <label for="title">Başlıq:</label>
         <input type="text" name="title" required>
 
-        <label for="content">İçerik:</label>
+        <label for="content">Məlumat:</label>
         <textarea name="content" required></textarea>
 
         <label for="author">Yazar:</label>
         <input type="text" name="author" required>
 
-        <button type="submit">Ekle</button>
+        <button type="submit">Əlavə et</button>
     </form>
+    <a href="/news">Xəbər Sil</a>
 </body>
 </html>

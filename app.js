@@ -40,7 +40,7 @@ app.get('/', (req, res) => {
 });
 
 // Sunucuyu Başlat
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5600;
 app.listen(PORT, () => {
   console.log(`Sunucu ${PORT} portunda çalışıyor.`);
 });

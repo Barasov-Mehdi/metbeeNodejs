@@ -1,6 +1,19 @@
+// serviceRoutes.js
 const express = require('express');
 const router = express.Router();
 const Service = require('../models/service');
+const cloudinary = require('../config/cloudinary'); // Cloudinary konfigürasyonunu içe aktar
+const multer = require('multer');
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+
+// Cloudinary Storage
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  folder: 'uploads', // Bulutta depolanacak klasör adı
+  allowedFormats: ['jpg', 'png', 'jpeg']
+});
+
+const parser = multer({ storage: storage });
 
 // Tüm hizmetleri getir
 router.get('/getAll', async (req, res) => {
@@ -12,24 +25,22 @@ router.get('/getAll', async (req, res) => {
   }
 });
 
-
 router.get('/add', (req, res) => {
   res.render('add'); // 'add' ejs dosyasını render ediyor
 });
 
 // Yeni hizmet ekle
-router.post('/add', async (req, res) => {
+router.post('/add', parser.single('image'), async (req, res) => {
   try {
-    console.log(req.body); // Gelen tüm form verilerini logla
-    const { category, image, name, description, info } = req.body;
+    const { category, name, description, info } = req.body;
 
-    if (!category || !image || !name || !description || !info) {
+    if (!category || !req.file || !name || !description || !info) {
       return res.status(400).json({ message: 'Lütfen tüm alanları doldurun.' });
     }
 
     const newService = new Service({
       category,
-      image,
+      image: req.file.path, // Cloudinary'den dönen URL
       name,
       description,
       info
@@ -41,6 +52,5 @@ router.post('/add', async (req, res) => {
     res.status(500).json({ message: 'Sunucu hatası', error: error.message });
   }
 });
-
 
 module.exports = router;

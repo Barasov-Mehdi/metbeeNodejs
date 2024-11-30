@@ -1,25 +1,175 @@
 <!-- views/newsList.ejs -->
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Haber Listesi</title>
+    <title>Yeni xəbər listəsi</title>
 </head>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+    }
+
+    h1 {
+        text-align: center;
+        color: #222;
+        margin-bottom: 20px;
+        font-size: 28px;
+    }
+
+    a {
+        display: inline-block;
+        text-decoration: none;
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        margin-bottom: 20px;
+        transition: background-color 0.3s;
+    }
+
+    a:hover {
+        background-color: #0056b3;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    li {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        padding: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s;
+    }
+
+    li:hover {
+        transform: scale(1.02);
+    }
+
+    h2 {
+        color: #007bff;
+        margin: 0 0 10px;
+    }
+
+    p {
+        margin: 5px 0;
+        color: #555;
+    }
+
+    form {
+        display: inline-block;
+    }
+
+    button {
+        background-color: #ff4d4d;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 8px 12px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    button:hover {
+        background-color: #cc0000;
+    }
+
+    @media (max-width: 768px) {
+        body {
+            padding: 10px;
+        }
+
+        h1 {
+            font-size: 24px;
+        }
+
+        a {
+            font-size: 14px;
+            padding: 8px 15px;
+        }
+
+        li {
+            padding: 10px;
+        }
+
+        h2 {
+            font-size: 18px;
+        }
+
+        p {
+            font-size: 14px;
+        }
+
+        button {
+            font-size: 12px;
+            padding: 6px 10px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        a {
+            width: 100%;
+            text-align: center;
+            padding: 10px 0;
+            margin-bottom: 10px;
+        }
+
+        li {
+            padding: 8px;
+        }
+
+        h2 {
+            font-size: 16px;
+        }
+
+        p {
+            font-size: 12px;
+        }
+
+        button {
+            padding: 5px 8px;
+            font-size: 12px;
+        }
+    }
+</style>
+
 <body>
-    <h1>Haber Listesi</h1>
-    <a href="/news/add">Yeni Haber Ekle</a>
+    <h1>Yeni xəbər listəsi</h1>
+    <a href="/news/add">Yeni xəbər əlavə et</a>
     <ul>
         <% news.forEach(function(item) { %>
             <li>
-                <h2><%= item.title %></h2>
-                <p><%= item.content %></p>
-                <p><strong>Yazar:</strong> <%= item.author %> | <strong>Tarih:</strong> <%= item.date.toLocaleDateString() %></p>
+                <h2>
+                    <%= item.title %>
+                </h2>
+                <p>
+                    <%= item.content %>
+                </p>
+                <p><strong>Yazar:</strong>
+                    <%= item.author %> | <strong>Tarix:</strong>
+                        <%= item.date.toLocaleDateString() %>
+                </p>
                 <form action="/news/<%= item._id %>?_method=DELETE" method="POST" style="display:inline;">
                     <button type="submit">Sil</button>
                 </form>
             </li>
-        <% }); %>
+            <% }); %>
     </ul>
 </body>
+
 </html>
