@@ -53,4 +53,58 @@ router.post('/add', parser.single('image'), async (req, res) => {
   }
 });
 
+router.get('/remove', async (req, res) => {
+  try {
+    const services = await Service.find(); // Veritabanından tüm hizmetleri al
+    console.log(services); // Hizmetleri kontrol edin
+    res.render('remove', { services }); // 'remove' ejs dosyasını render ediyor
+  } catch (error) {
+    console.error(error); // Hata alırsanız yazdırın
+    res.status(500).json({ message: 'Hizmetleri alırken hata oluştu', error: error.message });
+  }
+});
+
+// Silmek için POST isteği
+router.post('/remove', async (req, res) => {
+  try {
+    const { serviceId } = req.body;
+
+    // Hizmeti sil
+    const service = await Service.findById(serviceId);
+    if (!service) {
+      return res.status(404).json({ message: 'Hizmet bulunamadı' });
+    }
+
+    // Cloudinary'den resmi sil (opsiyonel)
+    const imagePublicId = service.image.split('/').pop().split('.')[0]; // Resim URL'sindeki public ID'yi çıkar
+    await cloudinary.uploader.destroy(imagePublicId); // Resmi Cloudinary'den sil
+
+    await Service.findByIdAndDelete(serviceId);
+    res.status(200).json({ message: 'Hizmet başarıyla silindi' });
+  } catch (error) {
+    res.status(500).json({ message: 'Sunucu hatası', error: error.message });
+  }
+});
+
+// Belirli bir hizmeti sil
+router.delete('/remove/:id', async (req, res) => {
+  try {
+    const serviceId = req.params.id;
+    const service = await Service.findById(serviceId);
+
+    if (!service) {
+      return res.status(404).json({ message: 'Hizmet bulunamadı' });
+    }
+
+    // Cloudinary'den resmi sil (opsiyonel)
+    const imagePublicId = service.image.split('/').pop().split('.')[0]; // Resim URL'sindeki public ID'yi çıkar
+    await cloudinary.uploader.destroy(imagePublicId); // Resmi Cloudinary'den sil
+
+    await Service.findByIdAndDelete(serviceId);
+    res.status(200).json({ message: 'Hizmet başarıyla silindi' });
+  } catch (error) {
+    res.status(500).json({ message: 'Sunucu hatası', error: error.message });
+  }
+});
+
 module.exports = router;

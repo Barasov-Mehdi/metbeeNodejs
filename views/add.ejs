@@ -1,34 +1,127 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="az">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yeni Hizmet Ekle</title>
+    <link rel="stylesheet" href="/styles.css">
+    <title>Yeni Xidmət Ekle</title>
 </head>
+<style>
+    /* Genel Ayarlar */
+    body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        width: 80%;
+        margin: auto;
+        overflow: hidden;
+    }
+
+    /* Başlık Ayarları */
+    header {
+        background: #35424a;
+        color: #ffffff;
+        padding: 10px 0;
+        text-align: center;
+    }
+
+    /* Form Ayarları */
+    form {
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        margin: 20px 0;
+    }
+
+    label {
+        display: block;
+        margin: 10px 0 5px;
+    }
+
+    input[type="text"],
+    input[type="file"],
+    textarea {
+        width: 100%;
+        padding: 10px;
+        margin: 5px 0 15px;
+        border: 1px solid #cccccc;
+        border-radius: 4px;
+    }
+
+    textarea {
+        height: 100px;
+        /* Textarea'nın yüksekliğini ayarlayın */
+    }
+
+    button {
+        background-color: #35424a;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+
+    /* Hata ve Başarı Mesajları */
+    .error {
+        color: red;
+    }
+
+    .success {
+        color: green;
+    }
+
+    /* Ekstra görünen öğeler için stil */
+    h2 {
+        margin: 20px 0;
+    }
+
+    .info {
+        font-size: 14px;
+        color: #555;
+    }
+</style>
+
 <body>
-    <h1>Yeni Hizmet Ekle</h1>
-    <form action="/service/add" method="POST" enctype="multipart/form-data">
-        <label for="category">Kategori:</label>
-        <select name="category" required>
-            <option value="Vergi xidməti">Vergi xidməti</option>
-            <option value="Mühasibat xidməti">Mühasibat xidməti</option>
-            <option value="Mətbəə və poliqrafiya">Mətbəə və poliqrafiya</option>
-            <option value="Boşdur">Boşdur</option>
-        </select><br><br>
-    
-        <label for="image">Resim Yükle:</label>
-        <input type="file" name="image" accept="image/*" required><br><br>
-    
-        <label for="name">İsim:</label>
-        <input type="text" name="name" required><br><br>
-    
-        <label for="description">Açıklama:</label>
-        <textarea name="description" required></textarea><br><br>
-    
-        <label for="info">Bilgi:</label>
-        <textarea name="info" required></textarea><br><br>
-    
-        <button type="submit">Ekle</button>
-    </form>
+    <header>
+        <h1>Yeni Xidmət Ekle</h1>
+    </header>
+    <div class="container">
+        <form action="/service/add" method="POST" enctype="multipart/form-data">
+            <div>
+                <label for="category">Kateqoriya:</label>
+                <input type="text" name="category" id="category" required>
+            </div>
+            <div>
+                <label for="name">Ad:</label>
+                <input type="text" name="name" id="name" required>
+            </div>
+            <div>
+                <label for="description">Təsvir:</label>
+                <input type="text" name="description" id="description" required>
+            </div>
+            <div>
+                <label for="info">Məlumat:</label>
+                <textarea name="info" id="info"></textarea>
+            </div>
+            <div>
+                <label for="image">Şəkil Yükleyin:</label>
+                <input type="file" name="image" id="image" required>
+            </div>
+            <button type="submit">Yerləşdir</button>
+        </form>
+    </div>
 </body>
+
 </html>
