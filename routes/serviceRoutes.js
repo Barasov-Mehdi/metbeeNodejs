@@ -47,7 +47,7 @@ router.post('/add', parser.single('image'), async (req, res) => {
     });
 
     await newService.save();
-    res.status(201).json({ message: 'Hizmet başarıyla eklendi.', service: newService });
+    res.redirect('/service/add'); // Yönlendirme
   } catch (error) {
     res.status(500).json({ message: 'Sunucu hatası', error: error.message });
   }
