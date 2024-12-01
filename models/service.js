@@ -4,7 +4,7 @@ const express = require('express');
 const serviceSchema = new mongoose.Schema({
   category: {
     type: String,
-    enum: ['Vergi xidməti', 'Mühasibat xidməti', 'Mətbəə və poliqrafiya', 'Boşdur'],
+    enum: ['Vergi xidməti', 'Mühasibat xidməti', 'Mətbəə', 'Boşdur', 'Poliqrafiya'],
     required: true
   },
   image: {

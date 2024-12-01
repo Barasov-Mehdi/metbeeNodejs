@@ -101,8 +101,16 @@
         <form action="/service/add" method="POST" enctype="multipart/form-data">
             <div>
                 <label for="category">Kateqoriya:</label>
-                <input type="text" name="category" id="category" required>
+                <select name="category" id="category" required>
+                    <option value="" disabled selected>Kateqoriya seçin</option>
+                    <option value="Vergi xidməti">Vergi xidməti</option>
+                    <option value="Mühasibat xidməti">Mühasibat xidməti</option>
+                    <option value="Mətbəə">Mətbəə</option>
+                    <option value="Boşdur">Boşdur</option>
+                    <option value="Poliqrafiya">Poliqrafiya</option>
+                </select>
             </div>
+            
             <div>
                 <label for="name">Ad:</label>
                 <input type="text" name="name" id="name" required>
