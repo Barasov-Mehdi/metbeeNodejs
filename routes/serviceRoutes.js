@@ -80,7 +80,6 @@ router.post('/remove', async (req, res) => {
     await cloudinary.uploader.destroy(imagePublicId); // Resmi Cloudinary'den sil
 
     await Service.findByIdAndDelete(serviceId);
-    // res.status(200).json({ message: 'Hizmet başarıyla silindi' });
     res.redirect('/service/remove'); // Yönlendirme
   } catch (error) {
     res.status(500).json({ message: 'Sunucu hatası', error: error.message });
@@ -102,7 +101,6 @@ router.delete('/remove/:id', async (req, res) => {
     await cloudinary.uploader.destroy(imagePublicId); // Resmi Cloudinary'den sil
 
     await Service.findByIdAndDelete(serviceId);
-    // res.status(200).json({ message: 'Hizmet başarıyla silindi' });
     res.redirect('/service/remove'); // Yönlendirme
   } catch (error) {
     res.status(500).json({ message: 'Sunucu hatası', error: error.message });
